@@ -167,7 +167,7 @@ int om_on_data(int id, char* data, int len, int(*callback)(int, const char*, int
 
     //create end send response
     if (res == 0) {
-        char response[OM_START_RESPONSE_OK_LENGTH + 5 + 4 + response_body_len]; //5 symbols for content length value + 2 symbols for '\n\n' before body
+        char response[OM_START_RESPONSE_OK_LENGTH + 5 + 4 + response_body_len]; //5 symbols for content length value + 4 symbols for '\r\n\r\n' before body
         int response_len = om_make_response(response_body, response_body_len, response);
         callback(id, response, response_len, NULL);
     } else {
@@ -193,6 +193,6 @@ int om_server(uint16_t port, int (*proc)(char* const, const int, char*, int*)) {
     return 0;
 }
 
-int is_response_size_available(int size) {
+int om_is_response_size_available(int size) {
     return size <= OM_MAX_RESPONSE_BODY_LENGTH;
 }
